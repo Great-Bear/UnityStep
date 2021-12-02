@@ -2,37 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveTube : MonoBehaviour {
+public class MoveTube : MonoBehaviour
+{
+    public static float MoveVelocity = 2f;
+    public static float GapSize = 2;
 
-	public float MoveVelocity = 1;
+    private GameObject TopPart;
+    private GameObject BottomPart;
 
-	void Start () {
-		
+    void Start()
+    {
+        TopPart = transform.Find("Top").gameObject;
+        BottomPart = transform.Find("Bottom").gameObject;
+    } 
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Translate(Vector2.left * MoveVelocity * Time.deltaTime);
+    }
+
+	void LateUpdate()
+	{
+		if(TopPart.transform.localPosition.y != GapSize)
+		{
+            TopPart.transform.localPosition = new Vector2(TopPart.transform.localPosition.x, GapSize);
+            BottomPart.transform.localPosition = new Vector2(BottomPart.transform.localPosition.x, -GapSize);
+        }
 	}
-	
-	
-	void Update () {
-		transform.Translate(Vector2.left * MoveVelocity * SpeedGame.SpeedGameValue * Time.deltaTime);
-	}
-
 }
-/*
-	Задание "Меню"
-	1. Создать меню пользователя, включающее в себя
-	    - Информационное сообщение (Игра окончена, пауза,...)
-		- Слайдер выбора скорости игры 
-		- Переключатель для "сложности" - большие/маленькие 
-          промежутки между трубами
-		- Кнопка (старт / пауза / рестарт)
-	2. Встроить меню: в момент начала игры активно меню,
-		игровое время не идет. По нажатию на "старт"
-		игра запускается, меню исчезает.
-		Обеспечить регулировку скорости движени труб
-		и размера "пролета" между трубами
-	3. Реализовать ход времени (часы) и подсчет
-		пройденных труб + общие очки, учитывающие сложность
-	*  Жизни: на старте 3 жизни (3 картинки птиц в 
-		углу поля. При потери жизни одна из картинок
-		исчезает (? появляется меню, перенос в 
-		безопасную зону)
- */

@@ -2,25 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OutOfField : MonoBehaviour {
+public class OutOfField : MonoBehaviour
+{
+    private GameObject spawnPosition;
+    void Start()
+    {
+        spawnPosition = GameObject.Find("SpawnPosition");
+    }
 
-	private GameObject spawnPosition;
-	void Start () {
-		spawnPosition = GameObject.Find("SpawnPosition");
-	}
-	
-	void Update () {
-		
-	}
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		Debug.Log(other.gameObject.transform.parent.gameObject.name);
-
-		other.gameObject.transform.parent.position = 
-			spawnPosition.transform.position;
-
-		other.gameObject.transform.parent.Translate(
-			Vector2.up * Random.Range(-2f, 2f));
-	}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Tube"))
+        {
+            //Debug.Log(collision.gameObject.transform.gameObject.name);
+            collision.gameObject.transform.position = spawnPosition.transform.position;
+            collision.gameObject.transform.Translate(Vector2.up * Random.Range(-2f, 2f));
+        }
+    }
 }
