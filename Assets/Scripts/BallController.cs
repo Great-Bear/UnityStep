@@ -5,20 +5,17 @@ using UnityEngine;
 public class BallController : MonoBehaviour
 {
     public float forceFactor = 200;
-
-    private Vector3 forceDirection;
     private Rigidbody rb;
+    private GameObject focalPoint;
     void Start()
     {
-        forceDirection = Vector3.zero;
         rb = GetComponent<Rigidbody>();
+        focalPoint = GameObject.Find("focalPoint");
     }
 
     // Update is called once per frame
     void Update()
     {
-        forceDirection.x = Input.GetAxis("Horizontal");
-        forceDirection.z = Input.GetAxis("Vertical");
-        rb.AddForce(forceDirection * forceFactor * Time.deltaTime);
+        rb.AddForce(focalPoint.transform.forward * Input.GetAxis("Vertical") * 750 * Time.deltaTime);
     }
 }
